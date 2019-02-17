@@ -145,9 +145,9 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
-      query: "",
+      query: '',
       pagenum: 1,
       pagesize: 2,
       total: -1,
@@ -156,19 +156,19 @@ export default {
       dialogFormVisibleEdit: false,
       dialogFormVisibleRole: false,
       formdata: {
-        username: "",
-        password: "",
-        email: "",
-        mobile: ""
+        username: '',
+        password: '',
+        email: '',
+        mobile: ''
       },
       list: [],
       currUsername: '',
       currUserId: '',
-      roles: [],
-    };
+      roles: []
+    }
   },
-  created() {
-    this.getTableData();
+  created () {
+    this.getTableData()
   },
   methods: {
     async setRole () {
@@ -184,7 +184,7 @@ export default {
       this.currUsername = user.username
       this.formdata = user
       this.dialogFormVisibleRole = true
-      const res = await this.$http.get(`roles`);
+      const res = await this.$http.get(`roles`)
       console.log(res)
       const {meta: {status, msg}, data} = res.data
       if (status === 200) {
@@ -195,107 +195,105 @@ export default {
       // console.log(res2)
       this.selectVal = res2.data.data.rid
     },
-    async changeState(user) {
+    async changeState (user) {
       const res = await this.$http.put(
         `users/${user.id}/state/${user.mg_state}`
-      );
+      )
       const {
         meta: { status, msg }
-      } = res.data;
+      } = res.data
       if (status === 200) {
-        this.$message.success(msg);
+        this.$message.success(msg)
       }
     },
-    async editUser() {
+    async editUser () {
       const res = await this.$http.put(
         `users/${this.formdata.id}`,
         this.formdata
-      );
+      )
       const {
         meta: { status, msg }
-      } = res.data;
+      } = res.data
       if (status === 200) {
-        this.dialogFormVisibleEdit = false;
-        this.$message.success(msg);
-        this.getTableData();
+        this.dialogFormVisibleEdit = false
+        this.$message.success(msg)
+        this.getTableData()
       }
     },
-    showDiaEditUser(user) {
-      this.formdata = user;
-      this.dialogFormVisibleEdit = true;
+    showDiaEditUser (user) {
+      this.formdata = user
+      this.dialogFormVisibleEdit = true
     },
-    showMsgBox(user) {
-      this.$confirm("是否把我删除？", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
+    showMsgBox (user) {
+      this.$confirm('是否把我删除？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       })
         .then(async () => {
-          const res = await this.$http.delete(`users/${user.id}`);
+          const res = await this.$http.delete(`users/${user.id}`)
           const {
             meta: { status, msg }
-          } = res.data;
+          } = res.data
           if (status === 200) {
-            this.$message.success(msg);
-            this.pagenum = 1;
-            this.getTableData();
+            this.$message.success(msg)
+            this.pagenum = 1
+            this.getTableData()
           }
         })
         .catch(() => {
-          this.$message.info("已取消删除");
-        });
+          this.$message.info('已取消删除')
+        })
     },
-    async addUser() {
-      const res = await this.$http.post(`users`, this.formdata);
-      this.dialogFormVisibleAdd = false;
-      this.getTableData();
+    async addUser () {
+      const res = await this.$http.post(`users`, this.formdata)
+      this.dialogFormVisibleAdd = false
+      this.getTableData()
     },
-    showDiaAddUser() {
-      this.formdata = {};
-      this.dialogFormVisibleAdd = true;
+    showDiaAddUser () {
+      this.formdata = {}
+      this.dialogFormVisibleAdd = true
     },
-    getAllUsers() {
-      this.pagenum = 1;
-      this.getTableData();
+    getAllUsers () {
+      this.pagenum = 1
+      this.getTableData()
     },
-    searchUser() {
-      this.getTableData();
+    searchUser () {
+      this.getTableData()
     },
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
-      this.pagesize = 1;
-      this.pagesize = val;
-      this.getTableData();
+    handleSizeChange (val) {
+      console.log(`每页 ${val} 条`)
+      this.pagesize = 1
+      this.pagesize = val
+      this.getTableData()
     },
-    handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
-      this.pagenum = val;
-      this.getTableData();
+    handleCurrentChange (val) {
+      console.log(`当前页: ${val}`)
+      this.pagenum = val
+      this.getTableData()
     },
-    async getTableData() {
-      const AUTH_TOKEN = localStorage.getItem("token");
-      this.$http.defaults.headers.common["Authorization"] = AUTH_TOKEN;
+    async getTableData () {
       const res = await this.$http.get(
         `users?query=${this.query}&pagenum=${this.pagenum}&pagesize=${
           this.pagesize
         }`
-      );
+      )
       // 可注释
-      console.log(res);
+      // console.log(res)
 
       const {
         data,
         meta: { status, msg }
-      } = res.data;
+      } = res.data
       if (status === 200) {
-        this.total = data.total;
-        this.list = data.users;
+        this.total = data.total
+        this.list = data.users
         // 可注释
-        console.log(msg);
+        console.log(msg)
       }
     }
   }
-};
+}
 </script>
 
 <style>
