@@ -3,10 +3,12 @@ const HttpServer = {}
 HttpServer.install = function (Vue) {
   axios.defaults.baseURL = 'http://localhost:8888/api/private/v1/'
   axios.interceptors.request.use(function (config) {
-    console.log("拦截器被触发----")
+    console.log('拦截器被触发----')
     if (config.url !== 'login') {
-      const AUTH_TOKEN = localStorage.getItem("token")
-      axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
+      const token = localStorage.getItem('token')
+      // axios.defaults.headers.common['Authorization'] = token
+      config.headers.Authorization = token
+      console.log(config, 111)
     }
     return config
   }, function (error) {
