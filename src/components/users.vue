@@ -220,9 +220,12 @@ export default {
         this.getTableData()
       }
     },
-    showDiaEditUser (user) {
-      this.formdata = user
+    async showDiaEditUser (user) {
       this.dialogFormVisibleEdit = true
+      // this.formdata = user
+      const res = await this.$http.get(`users/${user.id}`)
+      console.log(res)
+      this.formdata = res.data.data
     },
     showMsgBox (user) {
       this.$confirm('是否把我删除？', '提示', {
