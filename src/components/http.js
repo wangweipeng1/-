@@ -8,7 +8,7 @@ HttpServer.install = function (Vue) {
       const token = localStorage.getItem('token')
       // axios.defaults.headers.common['Authorization'] = token
       config.headers.Authorization = token
-      console.log(config, 111)
+      // console.log(config)
     }
     return config
   }, function (error) {

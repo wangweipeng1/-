@@ -156,6 +156,7 @@ export default {
       const {meta: {status, msg}} = res.data
       if (status === 200) {
         this.dialogTableVisibleRole = false
+        this.$message.success(msg)
         this.getTableData()
       }
     },
@@ -164,7 +165,7 @@ export default {
        this.currRoleId = role.id
       this.dialogTableVisibleRole = true;
       const res = await this.$http.get(`rights/tree`);
-      console.log(res);
+      // console.log(res);
       const {
         meta: { status, msg },
         data
@@ -183,9 +184,7 @@ export default {
           })
         })
       })
-
       this.arrCheck = temp
-
     },
     //   添加按钮-添加角色信息
     async addUser() {
@@ -267,7 +266,7 @@ export default {
       } = res.data;
       if (status === 200) {
         this.list = data;
-        console.log(data)
+        console.log(data, '获取角色列表所有信息---')
       }
     },
     // 关闭el-tag 删除角色指定权限
