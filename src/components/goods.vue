@@ -14,7 +14,7 @@
         >
           <el-button @click="searchUser()" slot="append" icon="el-icon-search"></el-button>
         </el-input>
-        <el-button @click="showDiaAddUser()" type="success" plain>添加用户</el-button>
+        <el-button @click="$router.push({name:'goodsadd'})" type="success" plain>添加商品</el-button>
       </el-col>
     </el-row>
     <!-- 表格 -->
@@ -93,8 +93,6 @@ export default {
     async getAllUsers() {},
     //   搜索商品
     async searchUser() {},
-    //   添加商品
-    async showDiaAddUser() {}
   }
 };
 </script>
