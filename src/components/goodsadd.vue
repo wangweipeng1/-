@@ -1,7 +1,7 @@
 <template>
   <el-card class="box">
     <cus-bread leave1="商品管理" leave2="商品列表"></cus-bread>
-    <el-alert class="alert" title="添加商品信息" type="info" center show-icon></el-alert>
+    <el-alert class="alert" title="添加商品信息" type="info" center show-icon :closable='false'></el-alert>
     <el-steps :active="active*1" align-center finish-status="success">
       <el-step title="基本信息"></el-step>
       <el-step title="商品参数"></el-step>
