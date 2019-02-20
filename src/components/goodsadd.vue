@@ -31,6 +31,7 @@
               v-model="selectedOptions"
               @change="handleChange"
               :props="defaultProp"
+              clearable
             ></el-cascader>
           </el-form-item>
         </el-tab-pane>
@@ -49,24 +50,35 @@
         <el-tab-pane name="4" label="商品图片">
           <el-form-item label="添加图片">
             <el-upload
-              action="https://jsonplaceholder.typicode.com/posts/"
+              :headers="headers"
+              action="http://localhost:8888/api/private/v1/upload"
               :on-success="handleSuccess"
               :on-remove="handleRemove"
-              :file-list="fileList2"
               list-type="picture"
             >
               <el-button size="small" type="primary">点击上传</el-button>
             </el-upload>
           </el-form-item>
         </el-tab-pane>
-        <el-tab-pane name="5" label="商品内容"></el-tab-pane>
+        <el-tab-pane name="5" label="商品内容">
+          <el-form-item>
+            <el-button @click="addGoods()">添加商品</el-button>
+            <quill-editor v-model="form.goods_introduce"></quill-editor>
+          </el-form-item>
+        </el-tab-pane>
       </el-tabs>
     </el-form>
   </el-card>
 </template>
 
 <script>
+// 富文本编辑器
+import "quill/dist/quill.core.css";
+import "quill/dist/quill.snow.css";
+import "quill/dist/quill.bubble.css";
+import { quillEditor } from "vue-quill-editor";
 export default {
+  components: { quillEditor },
   data() {
     return {
       active: "1",
@@ -77,7 +89,8 @@ export default {
         goods_number: "",
         goods_weight: "",
         goods_introduce: "",
-        pics: ""
+        pics: [],
+        attrs: []
       },
       //   级联配置数据源
       options: [],
@@ -89,23 +102,76 @@ export default {
       },
       arrDy: [],
       arrStatic: [],
-      fileList2: []
+      fileList2: [],
+      // 上传文件
+      headers: {
+        Authorization: localStorage.getItem("token")
+      }
     };
   },
   created() {
     this.getGoodsCate();
   },
   methods: {
-    handleSuccess(file, fileList) {
-      console.log(file);
+    // 添加商品请求
+    async addGoods() {
+      this.form.goods_cat = this.selectedOptions.join(",");
+      // 处理动态;
+      const obj1 = { attr_id: "", attr_value: "" };
+      const arr1 = [];
+      this.arrDy.forEach(item => {
+        obj1.attr_id = item.attr_id;
+        obj1.attr_value = item.attr_vals;
+        arr1.push(obj1);
+      });
+
+      // 处理静态;
+      const obj2 = { attr_id: "", attr_value: "" };
+      const arr2 = [];
+      this.arrStatic.forEach(item => {
+        obj2.attr_id = item.attr_id;
+        obj2.attr_value = item.attr_vals;
+        arr2.push(obj2);
+      });
+      this.form.attrs = [...arr1, ...arr2];
+
+      const res = await this.$http.post("goods", this.form);
+      const {
+        meta: { msg, status }
+      } = res.data;
+      if (status === 201) {
+        // 列表
+        this.$router.push({
+          name: "goods"
+        });
+      } else {
+        this.$message.error(msg);
+      }
+    },
+    handleSuccess(res, file, fileList) {
+      console.log(res, "success--");
+      // res.data.tmp_path
+      this.form.pics.push({
+        pic: res.data.tmp_path
+      });
     },
     handleRemove(file, fileList) {
-      console.log(file, fileList);
+      console.log(file, "remove----");
+      // file.response.data.tmp_path
+      const Index = this.form.pics.findIndex(item => {
+        return item.pic === file.response.data.tmp_path;
+      });
+      this.form.pics.splice(Index, 1);
     },
     async changeTab() {
       if ((this.active === "2") | (this.active === "3")) {
         if (this.selectedOptions.length !== 3) {
           this.$message.error("请先选择三级分类!");
+          if (this.active === "2") {
+            this.arrDy = [];
+          } else {
+            this.arrStatic = [];
+          }
           return;
         }
         if (this.active === "2") {
@@ -172,5 +238,10 @@ export default {
 .form {
   height: 300px;
   overflow: auto;
+}
+.ql-editor,
+.ql-blank {
+  /* height: 200px; */
+  min-height: 200px;
 }
 </style>
