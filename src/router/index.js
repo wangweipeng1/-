@@ -1,21 +1,23 @@
 import Vue from 'vue'
-import Router from 'vue-router'
-import Login from '@/components/login.vue'
-import Home from '@/components/home.vue'
-import Users from '@/components/users.vue'
-import Rights from '@/components/rights.vue'
-import Roles from '@/components/roles.vue'
-import Goods from '@/components/goods.vue'
-import Goodsadd from '@/components/goodsadd.vue'
-import Params from '@/components/params.vue'
-import Categories from '@/components/categories.vue'
-import Orders from '@/components/orders.vue'
-import Reports from '@/components/reports.vue'
+import VueRouter from 'vue-router'
+
+const Login = () => import('@/components/login.vue')
+const Home = () => import('@/components/home.vue')
+const Users = () => import('@/components/users.vue')
+const Rights = () => import('@/components/rights.vue')
+const Roles = () => import('@/components/roles.vue')
+const Goods = () => import('@/components/goods.vue')
+const Goodsadd = () => import('@/components/goodsadd.vue')
+const Params = () => import('@/components/params.vue')
+const Categories = () => import('@/components/categories.vue')
+const Orders = () => import('@/components/orders.vue')
+const Reports = () => import('@/components/reports.vue')
+
 import { Message } from 'element-ui'
 
-Vue.use(Router)
+Vue.use(VueRouter)
 
-const router = new Router({
+const router = new VueRouter({
   routes: [
     {
       name: 'login',

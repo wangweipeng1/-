@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Echarts from "echarts";
+import echarts from "echarts";
 
 export default {
   mounted() {
@@ -14,7 +14,7 @@ export default {
   },
   methods: {
     async addEcharts() {
-      const myChart = Echarts.init(document.getElementById("main"));
+      const myChart = echarts.init(document.getElementById("main"));
       const option1 = {
         title: {
           text: "图示"
@@ -54,7 +54,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .box {
   height: 100%;
 }

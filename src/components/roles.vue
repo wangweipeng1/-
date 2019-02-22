@@ -282,7 +282,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .btn {
   margin-top: 20px;
 }

@@ -3,13 +3,13 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
+import ELEMENT from 'element-ui'
+// import 'element-ui/lib/theme-chalk/index.css'
 import '@/assets/css/base.css'
 import moment from 'moment'
 import HttpServer from './components/http'
 import cusBread from '@/components/cusBread.vue'
-Vue.use(ElementUI)
+Vue.use(ELEMENT)
 Vue.use(HttpServer)
 
 Vue.config.productionTip = false

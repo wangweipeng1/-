@@ -4,7 +4,8 @@
     <el-header class="header">
       <el-row>
         <el-col :span="4">
-          <img src="@/assets/logo.png" alt="图片加载失败">
+          <!-- <img src="@/assets/logo.png" alt="图片加载失败"> -->
+          <img src="@/assets/logo-wps图片.png" alt="图片加载失败">
         </el-col>
         <el-col :span="19" class="middle">
           <h2>电商后台管理系统</h2>
@@ -75,7 +76,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .container {
   background-color: #b3c0d1;
   height: 100%;

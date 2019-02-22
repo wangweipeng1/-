@@ -33,14 +33,14 @@ export default {
           name: 'home'
         })
       } else {
-        this.$message.error(msg)
+        // this.$message.error(msg)
       }
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
 .login-wrap {
     background-color: #324152;
     height: 100%;

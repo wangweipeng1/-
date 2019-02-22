@@ -21,6 +21,15 @@ const createLintingRule = () => ({
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
+  // cdn配置
+  externals: {
+    vue: 'Vue',
+    'vue-router': 'VueRouter',
+    'element-ui': 'ELEMENT',
+    axios: "axios",
+    moment: 'moment',
+    echarts: 'echarts'
+  },
   entry: {
     app: './src/main.js'
   },
